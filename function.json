@@ -1,6 +1,6 @@
 {
   "description": "ECR Garbage Collector - Clean up untagged images",
-  "memory": "1024",
+  "memory": "128",
   "timeout": "10",
   "runtime": "nodejs4.3"
 }
