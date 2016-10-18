@@ -1,0 +1,21 @@
+{
+  "name": "ecr-gc",
+  "version": "1.0.0",
+  "description": "ECR Garbage Collector",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtan4/ecr-gc.git"
+  },
+  "author": "Daisuke Fujita",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dtan4/ecr-gc/issues"
+  },
+  "homepage": "https://github.com/dtan4/ecr-gc#readme"
+}
