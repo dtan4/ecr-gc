@@ -7,12 +7,13 @@ AWS Lambda function to clean up untagged images stored in ECR.
 The default maxinum number of images per one ECR repository is 1000.
 In addition, users are changed with storage pricing: $0.10 per GB-month.
 
-[Amazon ECR Service Limits - Amazon ECR](http://docs.aws.amazon.com/AmazonECR/latest/userguide/service_limits.html)
-[AWS | Amazon EC2 Container Service | Pricing](https://aws.amazon.com/ecr/pricing/)
+- [Amazon ECR Service Limits - Amazon ECR](http://docs.aws.amazon.com/AmazonECR/latest/userguide/service_limits.html)
+- [AWS | Amazon EC2 Container Service | Pricing](https://aws.amazon.com/ecr/pricing/)
 
 If you build new image and push to ECR frequently, this repository capacity will be filled up soon.
 
 By the way, most images which are _untagged_ (= old) image may be no longer needed. We have no reason to retain unnecessary image for a long time.
+
 Why don't you delete unnecessary images to save cost?
 
 ## Install
