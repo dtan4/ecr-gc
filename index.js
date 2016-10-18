@@ -1,7 +1,6 @@
 'use strict';
 
 let AWS = require('aws-sdk');
-let ecr = new AWS.ECR();
 
 exports.handle = (event, context, callback) => {
   let repository = event.repository;
