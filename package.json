@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "ECR Garbage Collector",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "aws-sdk": "^2.6.9"
+  },
   "devDependencies": {
     "eslint": "^3.8.1",
     "eslint-plugin-node": "^2.1.3"
