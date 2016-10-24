@@ -58,5 +58,3 @@ exports.handle = (event, context, callback) => {
     });
   }
 };
-
-exports.handle({}, null, (err, msg) => { console.log(err); console.log(msg); });
