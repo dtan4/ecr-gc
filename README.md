@@ -65,7 +65,14 @@ $ apex invoke ecr-gc < functions/ecr-gc/event.json
 
 ### 2. Standalone
 
-Preparing... :construction_worker:
+Build .zip package:
+
+```bash
+$ npm install
+$ npm run dist
+```
+
+Upload `dist/ecr-gc.zip` via Management Console or awscli.
 
 ## License
 
