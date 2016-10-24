@@ -6,19 +6,20 @@ let ecr = new AWS.ECR();
 function cleanUpImages(repository) {
   let promise = ecr.listImages({
     repositoryName: repository,
+    filter: {
+      tagStatus: 'UNTAGGED',
+    }
   }).promise();
 
   return promise.then(data => {
     let imageIds = [];
 
     data.imageIds.forEach(image => {
-      if (!image.imageTag) {
-        console.log('image ' + image.imageDigest + ' will be deleted.');
+      console.log('image ' + image.imageDigest + ' will be deleted.');
 
-        imageIds.push({
-          imageDigest: image.imageDigest,
-        });
-      }
+      imageIds.push({
+        imageDigest: image.imageDigest,
+      });
     });
 
     return ecr.batchDeleteImage({
@@ -46,8 +47,12 @@ exports.handle = (event, context, callback) => {
       });
 
       return Promise.all(promises);
+    }).then(data => {
+      callback(null, data);
     }).catch(err => {
       callback(err);
     });
   }
 };
+
+exports.handle({}, null, (err, msg) => { console.log(err); console.log(msg); });
