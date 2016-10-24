@@ -29,11 +29,25 @@ function cleanUpImages(repository) {
 }
 
 exports.handle = (event, context, callback) => {
-  let repository = event.repository;
+  if (event.repository) {
+    let repository = event.repository;
 
-  cleanUpImages(repository).then(data => {
-    callback(null, data);
-  }).catch(err => {
-    callback(err);
-  });
+    cleanUpImages(repository).then(data => {
+      callback(null, data);
+    }).catch(err => {
+      callback(err);
+    });
+  } else {
+    ecr.describeRepositories({}).promise().then(data => {
+      let promises = [];
+
+      data.repositories.forEach(repository => {
+        promises.push(cleanUpImages(repository.repositoryName));
+      });
+
+      return Promise.all(promises);
+    }).catch(err => {
+      callback(err);
+    });
+  }
 };
