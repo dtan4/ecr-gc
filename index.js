@@ -22,10 +22,14 @@ function cleanUpImages(repository) {
       });
     });
 
-    return ecr.batchDeleteImage({
-      imageIds: imageIds,
-      repositoryName: repository,
-    }).promise();
+    if (imageIds.length > 0) {
+      return ecr.batchDeleteImage({
+        imageIds: imageIds,
+        repositoryName: repository,
+      }).promise();
+    } else {
+      return new Promise((resolve, _) => resolve('Repository ' + repository + ' has no untagged images. Skipped.'));
+    }
   });
 }
 
