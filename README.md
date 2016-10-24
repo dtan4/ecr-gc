@@ -20,9 +20,10 @@ Why don't you delete unnecessary images to save cost?
 
 ### IAM Role
 
-These 2 operation must be authorized:
+These 3 operation must be authorized:
 
 - `ecr:BatchDeleteImage`
+- `ecr:DescribeRepositories`
 - `ecr:ListImages`
 
 You can deploy this function as a part of [Apex](http://apex.run/) project, or standalone Lambda function.
