@@ -44,10 +44,22 @@ $ apex deploy ecr-gc
 Try it:
 
 ```bash
+$ cp functions/ecr-gc/event.json.sample functions/ecr-gc/event.json
+$ vim functions/ecr-gc/event.json
 $ cat functions/ecr-gc/event.json
 {
-  "repository": "reponame"
+  "repositories": [
+    "reponame"
+  ]
 }
+$ apex invoke ecr-gc < functions/ecr-gc/event.json
+```
+
+If `repositories` is empty, ALL repositories will be cleaned up.
+
+```bash
+$ cat functions/ecr-gc/event.json
+{}
 $ apex invoke ecr-gc < functions/ecr-gc/event.json
 ```
 

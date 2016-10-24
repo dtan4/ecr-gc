@@ -1,3 +1,5 @@
 {
-  "repository": "reponame"
+  "repositories": [
+    "reponame"
+  ]
 }

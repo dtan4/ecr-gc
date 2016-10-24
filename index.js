@@ -28,24 +28,26 @@ function cleanUpImages(repository) {
         repositoryName: repository,
       }).promise();
     } else {
-      return new Promise((resolve, _) => resolve('Repository ' + repository + ' has no untagged images. Skipped.'));
+      return new Promise((resolve, _reject) => resolve('Repository ' + repository + ' has no untagged images. Skipped.'));
     }
   });
 }
 
 exports.handle = (event, context, callback) => {
-  if (event.repository) {
-    let repository = event.repository;
+  let promises = [];
 
-    cleanUpImages(repository).then(data => {
+  if (event.repositories) {
+    event.repositories.forEach(repository => {
+      promises.push(cleanUpImages(repository));
+    });
+
+    Promise.all(promises).then(data => {
       callback(null, data);
     }).catch(err => {
       callback(err);
     });
   } else {
     ecr.describeRepositories({}).promise().then(data => {
-      let promises = [];
-
       data.repositories.forEach(repository => {
         promises.push(cleanUpImages(repository.repositoryName));
       });
