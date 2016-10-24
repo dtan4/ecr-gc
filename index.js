@@ -1,16 +1,14 @@
 'use strict';
 
 let AWS = require('aws-sdk');
+let ecr = new AWS.ECR();
 
-exports.handle = (event, context, callback) => {
-  let repository = event.repository;
-
-  let ecr = new AWS.ECR();
+function cleanUpImages(repository) {
   let promise = ecr.listImages({
     repositoryName: repository,
   }).promise();
 
-  promise.then(data => {
+  return promise.then(data => {
     let imageIds = [];
 
     data.imageIds.forEach(image => {
@@ -27,7 +25,13 @@ exports.handle = (event, context, callback) => {
       imageIds: imageIds,
       repositoryName: repository,
     }).promise();
-  }).then(data => {
+  });
+}
+
+exports.handle = (event, context, callback) => {
+  let repository = event.repository;
+
+  cleanUpImages(repository).then(data => {
     callback(null, data);
   }).catch(err => {
     callback(err);
