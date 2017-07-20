@@ -33,11 +33,11 @@ function cleanUpImages(repository) {
   });
 }
 
-exports.handle = (event, context, callback) => {
+function cleanUpUntaggedImages(repositories, callback) {
   let promises = [];
 
-  if (event.repositories) {
-    event.repositories.forEach(repository => {
+  if (repositories) {
+    repositories.forEach(repository => {
       promises.push(cleanUpImages(repository));
     });
 
@@ -58,5 +58,15 @@ exports.handle = (event, context, callback) => {
     }).catch(err => {
       callback(err);
     });
+  }
+}
+
+exports.handle = (event, context, callback) => {
+  switch (event.strategy) {
+    case 'untagged':
+      cleanUpUntaggedImages(event.repositories, callback);
+      break;
+    default:
+      callback('one of strategies ["untagged"] must be specified');
   }
 };

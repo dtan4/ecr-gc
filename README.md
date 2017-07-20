@@ -49,6 +49,7 @@ $ cp functions/ecr-gc/event.json.sample functions/ecr-gc/event.json
 $ vim functions/ecr-gc/event.json
 $ cat functions/ecr-gc/event.json
 {
+  "strategy": "untagged",
   "repositories": [
     "reponame"
   ]
@@ -60,7 +61,9 @@ If `repositories` is empty, ALL repositories will be cleaned up.
 
 ```bash
 $ cat functions/ecr-gc/event.json
-{}
+{
+  "strategy": "untagged"
+}
 $ apex invoke ecr-gc < functions/ecr-gc/event.json
 ```
 
