@@ -1,6 +1,6 @@
 # ecr-gc
 
-AWS Lambda function to clean up untagged images stored in ECR.
+AWS Lambda function / Docker image to clean up untagged images stored in ECR.
 
 ## Why
 
@@ -26,7 +26,7 @@ These 3 operation must be authorized:
 - `ecr:DescribeRepositories`
 - `ecr:ListImages`
 
-You can deploy this function as a part of [Apex](http://apex.run/) project, or standalone Lambda function.
+You can deploy this function as a part of [Apex](http://apex.run/) project, standalone Lambda function or Kubernetes CronJob.
 
 ### 1. Apex project
 
@@ -77,6 +77,26 @@ $ npm run dist
 ```
 
 Upload `dist/ecr-gc.zip` via Management Console or awscli.
+
+### 3. Kubernetes CronJob
+
+Set these Secrets:
+
+|name|key|description|
+|----|---|-----------|
+|`dotenv`|`AWS_ACCESS_KEY_ID`|AWS access key ID|
+|`dotenv`|`AWS_SECRET_ACCESS_KEY`|AWS secret access key|
+|`dotenv`|`AWS_REGION`|AWS region|
+|`dotenv`|`GC_STRATEGY`|GC strategy (only `untagged` is supported)|
+|`dotenv`|`REPOSITORIES`|comma-separated target ECR repositories (if empty, all repositories will be GCed)|
+
+deploy CronJob resource:
+
+```bash
+kubectl create -f kubernetes/cronjob.yaml [-n NAMESPACE]
+```
+
+`ecr-gc` Job will be invoked at 0:30 GMT in default.
 
 ## License
 

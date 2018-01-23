@@ -1,0 +1,39 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  name: ecr-gc
+  labels:
+    name: ecr-gc
+    role: job
+spec:
+  schedule: "* * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: false
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+      name: ecr-gc
+      labels:
+        basename: ecr-gc
+        role: job
+    spec:
+      template:
+        metadata:
+          name: ecr-gc
+          labels:
+            basename: ecr-gc
+            role: job
+        spec:
+          containers:
+          - name: ecr-gc
+            image: quay.io/dtan4/ecr-gc:latest
+            imagePullPolicy: Always
+            command:
+            - "npm"
+            - "run"
+            - "start"
+            envFrom:
+            - secretRef:
+                name: dotenv
+          restartPolicy: Never
