@@ -13,6 +13,7 @@
   "scripts": {
     "dist": "rm -fr dist; mkdir dist; node build.js",
     "lint": "eslint *.js",
+    "start": "node entrypoint.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
