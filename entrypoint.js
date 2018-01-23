@@ -6,8 +6,7 @@ index.handle({
   strategy: process.env.GC_STRATEGY,
 }, null, (error, result) => {
   if (error) {
-    console.error(error);
-    process.exit(1);
+    throw error;
   }
 
   console.log(result);
